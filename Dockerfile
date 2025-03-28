@@ -21,9 +21,6 @@ ENV PATH=/opt/conda/bin:$PATH
 # Crear y activar un entorno de Conda llamado 'myenv'
 RUN conda create -n myenv python=3.8 -y
 
-# Instalar cudatoolkit 12.4 para asegurar compatibilidad
-RUN conda install -n myenv cudatoolkit=12.4 -c nvidia
-
 # Establecer el entorno como predeterminado
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 
