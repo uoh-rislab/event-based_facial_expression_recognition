@@ -268,7 +268,7 @@ for tie in ties:
     print(f"🏁 Entrenando modelo para tie: {tie}...")
 
     # Directorio de datos para la variante actual
-    data_dir = f"output/e-ck+_frames_lstm_process_{fps}fps_{tie}/"
+    data_dir = f"ddbb_cropped/e-ck+_frames_lstm_process_{fps}fps_{tie}/"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_dir = f"results/{timestamp}_vit_lstm_e-ckplus_{fps}fps_{tie}"
     os.makedirs(output_dir, exist_ok=True)

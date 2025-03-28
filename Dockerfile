@@ -36,8 +36,7 @@ WORKDIR /app
 # Copiar el contenido actual del directorio al contenedor
 ADD . /app
 RUN mkdir /app/input
-RUN mkdir /app/output
-RUN mkdir /app/tmp
+RUN mkdir /app/results
 
 # Configurar el entorno por defecto en bash
 RUN echo "source /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc 
