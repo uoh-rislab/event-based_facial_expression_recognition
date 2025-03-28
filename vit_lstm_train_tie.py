@@ -17,7 +17,7 @@ from tqdm import tqdm
 from datetime import datetime
 from torchvision.models import vit_b_16
 from PIL import Image
-
+import yaml
 
 # ===========================
 # 2️⃣ Definir Modelo ViT + LSTM
@@ -256,6 +256,24 @@ val_transform = transforms.Compose([
 
 
 # ===========================
+# 📄 Cargar Configuración desde YAML
+# ===========================
+with open("yaml/config_asus.yaml", "r") as f:
+    config = yaml.safe_load(f)
+
+# Parámetros de configuración
+num_epochs = config["num_epochs"]
+batch_size = config["batch_size"]
+data_dir_base = config["data_dir_base"]
+num_classes = config["num_classes"]
+learning_rate = config["learning_rate"]
+pretrained_weights = config["pretrained_weights"]
+fps = config["fps"]
+ties = config["ties"]
+
+
+
+# ===========================
 # 5️⃣ Configuración Inicial
 # ===========================
 fps = 30
@@ -268,7 +286,7 @@ for tie in ties:
     print(f"🏁 Entrenando modelo para tie: {tie}...")
 
     # Directorio de datos para la variante actual
-    data_dir = f"ddbb_cropped/e-ck+_frames_lstm_process_{fps}fps_{tie}/"
+    data_dir = f"{data_dir_base}/e-ck+_frames_lstm_process_{fps}fps_{tie}/"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_dir = f"results/{timestamp}_vit_lstm_e-ckplus_{fps}fps_{tie}"
     os.makedirs(output_dir, exist_ok=True)
@@ -283,12 +301,13 @@ for tie in ties:
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
+
     # ===========================
     # 8️⃣ Configurar Modelo, Pérdida y Optimizador
     # ===========================
     model = ViT_LSTM_Classifier(num_classes=7)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.AdamW(model.parameters(), lr=1e-4)
+    optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
@@ -300,7 +319,7 @@ for tie in ties:
     # ===========================
     # 🔥 Entrenamiento del Modelo
     # ===========================
-    train_model(model, train_loader, val_loader, num_epochs=10)
+    train_model(model, train_loader, val_loader, num_epochs=num_epochs)
 
     # ===========================
     # 🎯 Matriz de Confusión

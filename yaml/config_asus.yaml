@@ -1,0 +1,31 @@
+# ==============================
+# 🔧 Configuración del Experimento
+# ==============================
+
+# Número de épocas para el entrenamiento
+num_epochs: 10
+
+# Tamaño del batch para entrenamiento y validación
+batch_size: 2
+
+# Directorio base de datos
+data_dir_base: "ddbb_cropped"
+
+# Número de clases para la clasificación
+num_classes: 7
+
+# Aprendizaje
+learning_rate: 1e-4
+
+# Peso para el modelo preentrenado
+pretrained_weights: "IMAGENET1K_V1"
+
+# Frames por segundo para las carpetas
+fps: 30
+
+# Variantes de tie para iterar
+ties:
+  - "t_t"
+  - "t_t0"
+  - "t0_t"
+  - "t0_t0"

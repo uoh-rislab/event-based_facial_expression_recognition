@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Actualizar paquetes e instalar dependencias del sistema
 RUN apt-get update && \
-    apt-get install -y zip wget libgl1 libglib2.0-0 vim && \
+    apt-get install -y zip wget libgl1 libglib2.0-0 vim libiomp-dev intel-openmp && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -21,6 +21,9 @@ ENV PATH=/opt/conda/bin:$PATH
 # Crear y activar un entorno de Conda llamado 'myenv'
 RUN conda create -n myenv python=3.8 -y
 
+# Instalar cudatoolkit 12.4 para asegurar compatibilidad
+RUN conda install -n myenv cudatoolkit=12.4 -c nvidia
+
 # Establecer el entorno como predeterminado
 SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 
@@ -28,7 +31,7 @@ SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 COPY requirements.txt /tmp/requirements.txt
 
 # Instalar las librerías de Python requeridas desde el requirements.txt
-RUN pip install -r /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
 
 # Set the working directory to /app
 WORKDIR /app
@@ -39,7 +42,8 @@ RUN mkdir /app/input
 RUN mkdir /app/results
 
 # Configurar el entorno por defecto en bash
-RUN echo "source /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc 
-
+RUN echo "source /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate myenv" >> ~/.bashrc
+    
 # Comando por defecto (puedes cambiarlo si es necesario)
 CMD ["bash"]

@@ -1,5 +1,6 @@
-torch
-torchvision
+torch==2.2.0+cu124
+torchvision==0.17.0+cu124
+torchaudio==2.2.0+cu124
 numpy
 matplotlib
 seaborn
