@@ -6,10 +6,10 @@
 num_epochs: 20
 
 # Tamaño del batch para entrenamiento y validación
-batch_size: 32
+batch_size: 64
 
 # Directorio base de datos
-data_dir_base: "ddbb_cropped"
+data_dir_base: "input"
 
 # Número de clases para la clasificación
 num_classes: 7

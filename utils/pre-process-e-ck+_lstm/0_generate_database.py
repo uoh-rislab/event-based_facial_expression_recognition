@@ -5,10 +5,10 @@ import shutil
 for tie in ['t_t', 't_t0', 't0_t', 't0_t0']:
 
 
-    base_path = f"../../output/e-ck+_frames_process_30fps_{tie}/"
+    base_path = f"../../ddbb_cropped/e-ck+_frames_process_30fps_{tie}/"
 
     # Ruta donde se almacenarán los resultados
-    output_path = f"../../output/e-ck+_frames_lstm_process_30fps_{tie}/"
+    output_path = f"../../ddbb_cropped/e-ck+_frames_lstm_process_30fps_{tie}/"
 
     # Longitud de la secuencia de frames (sliding window)
     seq_len = 3

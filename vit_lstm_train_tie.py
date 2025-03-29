@@ -27,7 +27,7 @@ class ViT_LSTM_Classifier(nn.Module):
         super(ViT_LSTM_Classifier, self).__init__()
         
         # Cargar modelo ViT-B/16 desde torchvision (preentrenado)
-        self.vit = vit_b_16(weights="IMAGENET1K_V1")
+        self.vit = vit_b_16(weights=pretrained_weights)
         self.vit.heads = nn.Identity()  # Eliminar la capa de clasificación
 
         
@@ -267,17 +267,11 @@ batch_size = config["batch_size"]
 data_dir_base = config["data_dir_base"]
 num_classes = config["num_classes"]
 learning_rate = config["learning_rate"]
+learning_rate = float(config["learning_rate"])  # Asegurar que sea float
 pretrained_weights = config["pretrained_weights"]
 fps = config["fps"]
 ties = config["ties"]
 
-
-
-# ===========================
-# 5️⃣ Configuración Inicial
-# ===========================
-fps = 30
-ties = ['t_t', 't_t0', 't0_t', 't0_t0']
 
 # ===========================
 # 6️⃣ Bucle Principal para Variantes tie
@@ -297,7 +291,6 @@ for tie in ties:
     train_dataset = SequenceDataset(root_dir=os.path.join(data_dir, 'train'), transform=train_transform)
     val_dataset = SequenceDataset(root_dir=os.path.join(data_dir, 'test'), transform=val_transform)
 
-    batch_size = 2
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
@@ -305,7 +298,7 @@ for tie in ties:
     # ===========================
     # 8️⃣ Configurar Modelo, Pérdida y Optimizador
     # ===========================
-    model = ViT_LSTM_Classifier(num_classes=7)
+    model = ViT_LSTM_Classifier(num_classes=num_classes)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
 

@@ -25,6 +25,6 @@ def clean_non_matching_files(reference_dir, target_dir):
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    reference = '../output/e-ck+_frames_process_30fps'
-    target = '../output/e-ck+_frames_process_30fps_t0_t0'
+    reference = '../../ddbb_cropped/e-ck+_frames_process_30fps'
+    target = '../../ddbb_cropped/e-ck+_frames_process_30fps_t_t'
     clean_non_matching_files(reference, target)

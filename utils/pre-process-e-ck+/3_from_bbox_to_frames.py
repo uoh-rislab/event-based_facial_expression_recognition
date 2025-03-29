@@ -3,9 +3,9 @@ import cv2
 from glob import glob
 
 # Rutas
-bbox_dir = '../output/ck+_frames_process_30fps/bboxes'           # .txt con bbox normalizados
-input_root = '../data/e-ck+_frames_30fps_t0_t0'                         # imágenes completas
-output_root = '../output/e-ck+_frames_process_30fps_t0_t0'             # solo imágenes recortadas
+bbox_dir = '../../ddbb_cropped/ck+_frames_process_30fps/bboxes'           # .txt con bbox normalizados
+input_root = '../../data/e-ck+_events_npy_30fps_t_t'                         # imágenes completas
+output_root = '../../ddbb_cropped/e-ck+_frames_process_30fps_t_t'             # solo imágenes recortadas
 os.makedirs(output_root, exist_ok=True)
 
 # Recorrer Train_Set y Test_Set

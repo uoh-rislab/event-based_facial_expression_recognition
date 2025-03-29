@@ -23,7 +23,7 @@ for tie in ['t_t', 't_t0', 't0_t', 't0_t0']:
     data_dir = f'output/e-ck+_frames_process_{fps}fps_{tie}/'  # carpeta que contiene Train_Set y Test_Set
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = f"results/vit_e-ckplus_{fps}fps_{tie}_{timestamp}"
+    output_dir = f"results/tie-vit/{timestamp}_vit_e-ckplus_{fps}fps_{tie}"
     os.makedirs(output_dir, exist_ok=True)
     writer = SummaryWriter(log_dir=os.path.join(output_dir, "tensorboard"))
 
