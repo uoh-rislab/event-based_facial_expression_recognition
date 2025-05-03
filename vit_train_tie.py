@@ -20,14 +20,14 @@ fps = 30
 
 for tie in ['t_t', 't_t0', 't0_t', 't0_t0']:
 
-    data_dir = f'output/e-ck+_frames_process_{fps}fps_{tie}/'  # carpeta que contiene Train_Set y Test_Set
+    data_dir = f'input/e-ck+_frames_process_{fps}fps_{tie}/'  # carpeta que contiene Train_Set y Test_Set
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = f"results/tie-vit/{timestamp}_vit_e-ckplus_{fps}fps_{tie}"
+    output_dir = f"results/tie-vit/vit_e-ckplus_{fps}fps_{tie}_{timestamp}"
     os.makedirs(output_dir, exist_ok=True)
     writer = SummaryWriter(log_dir=os.path.join(output_dir, "tensorboard"))
 
-    batch_size = 4
+    batch_size = 64
     num_epochs = 20
     num_classes = 7  # Ajusta al número real de clases
     use_pretrained = True  # True = usa ViT con pesos ImageNet
@@ -188,14 +188,29 @@ for tie in ['t_t', 't_t0', 't0_t', 't0_t0']:
     plt.legend()
     plt.savefig(os.path.join(output_dir, "train_loss.png"))
 
-    plt.figure()
-    plt.plot(train_accuracies, label='Train Accuracy')
-    plt.plot(val_accuracies, label='Val Accuracy')
+    # Normalizar los valores de accuracy al rango [0, 1]
+    train_accuracies_norm = [0.0] + [x / 100 for x in train_accuracies]
+    val_accuracies_norm = [0.0] + [x / 100 for x in val_accuracies]
+
+    # Crear la lista de epochs considerando el punto (0, 0)
+    epochs = list(range(len(train_accuracies_norm)))
+
+    # Crear la figura y plotear los valores normalizados
+    plt.figure(figsize=(8, 6))  # Tamaño más profesional
+    plt.plot(epochs, train_accuracies_norm, label='Train Accuracy', color='blue')
+    plt.plot(epochs, val_accuracies_norm, label='Val Accuracy', color='orange')
+
+    # Configuración del gráfico
     plt.xlabel("Epoch")
-    plt.ylabel("Accuracy (%)")
-    plt.title("Accuracy per Epoch")
+    plt.ylabel("Accuracy (0-1)")
+    plt.title("Accuracy per Epoch (Train vs Val)")
     plt.grid(True)
+    plt.ylim(0, 1)  # Limitar el eje y entre 0 y 1
+    plt.xlim(0, len(train_accuracies_norm) - 1)  # Ajustar eje x
     plt.legend()
+    plt.tight_layout()
+
+    # Guardar la imagen en el directorio de salida
     plt.savefig(os.path.join(output_dir, "accuracy.png"))
 
     # Confusion Matrix Final

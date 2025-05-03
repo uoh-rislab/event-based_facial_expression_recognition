@@ -27,7 +27,7 @@ class ViT_LSTM_Classifier(nn.Module):
         super(ViT_LSTM_Classifier, self).__init__()
         
         # Cargar modelo ViT-B/16 desde torchvision (preentrenado)
-        self.vit = vit_b_16(weights=pretrained_weights)
+        self.vit = vit_b_16(weights="IMAGENET1K_V1")
         self.vit.heads = nn.Identity()  # Eliminar la capa de clasificación
 
         
@@ -239,7 +239,7 @@ train_transform = transforms.Compose([
     transforms.RandomResizedCrop(224, scale=(0.8, 1.0)),
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.RandomRotation(15),
-    transforms.ColorJitter(brightness=0.2, contrast=0.2),
+    #transforms.ColorJitter(brightness=0.2, contrast=0.2),
     transforms.ToTensor(),
     transforms.Normalize([0.5]*3, [0.5]*3)
     #transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -258,7 +258,7 @@ val_transform = transforms.Compose([
 # ===========================
 # 📄 Cargar Configuración desde YAML
 # ===========================
-with open("yaml/config_asus.yaml", "r") as f:
+with open("yaml/config_dgx-1.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Parámetros de configuración
@@ -282,7 +282,7 @@ for tie in ties:
     # Directorio de datos para la variante actual
     data_dir = f"{data_dir_base}/e-ck+_frames_lstm_process_{fps}fps_{tie}/"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = f"results/{timestamp}_vit_lstm_e-ckplus_{fps}fps_{tie}"
+    output_dir = f"results/tie-vit-lstm/{timestamp}_vit_lstm_e-ckplus_{fps}fps_{tie}"
     os.makedirs(output_dir, exist_ok=True)
 
     # ===========================
@@ -298,7 +298,7 @@ for tie in ties:
     # ===========================
     # 8️⃣ Configurar Modelo, Pérdida y Optimizador
     # ===========================
-    model = ViT_LSTM_Classifier(num_classes=num_classes)
+    model = ViT_LSTM_Classifier(num_classes=7)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
 

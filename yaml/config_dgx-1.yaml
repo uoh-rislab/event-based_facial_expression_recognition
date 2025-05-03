@@ -6,7 +6,7 @@
 num_epochs: 20
 
 # Tamaño del batch para entrenamiento y validación
-batch_size: 64
+batch_size: 8
 
 # Directorio base de datos
 data_dir_base: "input"
@@ -25,7 +25,5 @@ fps: 30
 
 # Variantes de tie para iterar
 ties:
-  - "t_t"
-  - "t_t0"
   - "t0_t"
   - "t0_t0"

@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Actualizar paquetes e instalar dependencias del sistema
 RUN apt-get update && \
-    apt-get install -y zip wget libgl1 libglib2.0-0 vim tmux && \
+    apt-get install -y git zip wget libgl1 libglib2.0-0 vim tmux && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
