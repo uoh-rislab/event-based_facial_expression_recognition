@@ -600,8 +600,8 @@ def run_for_one_data_dir(args, data_dir: str, device: torch.device):
     print(f"[{base_name}] Found {num_classes} classes: {class_names}")
     print(f"[{base_name}] Train samples: {len(train_dataset)} | Test samples: {len(test_dataset)}")
 
-    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True,  num_workers=4)
-    test_loader  = DataLoader(test_dataset,  batch_size=args.batch_size, shuffle=False, num_workers=4)
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True,  num_workers=2)
+    test_loader  = DataLoader(test_dataset,  batch_size=args.batch_size, shuffle=False, num_workers=2)
 
     # -------- elegir pretrained_path según modo --------
     if args.mode == "scratch":
