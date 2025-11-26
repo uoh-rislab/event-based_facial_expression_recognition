@@ -223,7 +223,7 @@ for epoch in range(1, 151):
     else:
         epochs_no_improve += 1
         if epochs_no_improve >= patience:
-            print(f"Early stopping triggered at epoch {epoch}")
+            print(f"🛑 Early stopping triggered at epoch {epoch}")
             break
 
 # Guardar métricas

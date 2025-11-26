@@ -1,0 +1,38 @@
+1) Entrenamiento desde cero (scratch)
+
+python train_unet_encoder_classifier.py \
+  --auto_all_ties \
+  --output_root ../results/tie-unet \
+  --mode scratch \
+  --epochs 20 \
+  --batch_size 64 \
+  --gpu 0
+
+
+2) Transfer Learning (linear)
+
+python train_unet_encoder_classifier.py \
+  --auto_all_ties \
+  --output_root ../results/tie-unet \
+  --mode linear \
+  --pretrained_epoch 100 \
+  --pix2pix_root ../input/pix2pix \
+  --epochs 20 \
+  --batch_size 64 \
+  --lr_fc 1e-3 \
+  --gpu 0
+
+
+3) Fine-tuning (finetune)
+
+python train_unet_encoder_classifier.py \
+  --auto_all_ties \
+  --output_root ../results/tie-unet \
+  --mode finetune \
+  --pretrained_epoch 100 \
+  --pix2pix_root ../input/pix2pix \
+  --epochs 20 \
+  --batch_size 64 \
+  --lr_encoder 1e-5 \
+  --lr_fc 1e-4 \
+  --gpu 0

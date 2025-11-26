@@ -1,0 +1,5 @@
+python extract_nefer_face_bboxes.py \
+  --input-root /media/ignacio/KINGSTON/nefer/rgb_frames \
+  --bbox-out   /media/ignacio/KINGSTON/nefer/outputs/bboxes \
+  --crop-out   /media/ignacio/KINGSTON/nefer/outputs/crops \
+  --search-first-n 5
