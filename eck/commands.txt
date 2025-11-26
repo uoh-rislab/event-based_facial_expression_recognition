@@ -60,7 +60,7 @@ python train_eck_tie_unet_lstm.py \
   --auto_all_ties \
   --output_root ../results/tie-unet-lstm \
   --mode linear \
-  --pretrained_epoch 80 \
+  --pretrained_epoch 100 \
   --pix2pix_root ../input/pix2pix \
   --epochs 20 \
   --batch_size 64 \
@@ -76,7 +76,7 @@ python train_eck_tie_unet_lstm.py \
   --auto_all_ties \
   --output_root ../results/tie-unet-lstm \
   --mode finetune \
-  --pretrained_epoch 80 \
+  --pretrained_epoch 100 \
   --pix2pix_root ../input/pix2pix \
   --epochs 20 \
   --batch_size 64 \
